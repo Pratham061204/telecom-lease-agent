@@ -13,11 +13,27 @@ POLICIES = ROOT / "data" / "regional_policies.txt"
 
 agent = LeaseVettingAgent(INVENTORY, POLICIES)
 
+EXAMPLES = [
+    "Operator Du wants to mount a 15kg 5G antenna at a height of 40 meters on Tower TWR-101.",
+    "Operator Etisalat requests installation of a 50kg base station at 30m height on Tower TWR-101.",
+    "Operator Vodafone wants to mount a 10kg antenna at a height of 50 meters on Tower TWR-101.",
+    "Operator Du wants to install a 20kg small cell on Tower TWR-102.",
+    "Operator Zain requests a 5kg relay on Tower TWR-999.",
+]
+
 st.set_page_config(page_title="Tower Lease Review", layout="centered")
 st.title("Tower Lease Review")
 
+st.caption("Try an example:")
+cols = st.columns(len(EXAMPLES))
+selected = None
+for i, (col, ex) in enumerate(zip(cols, EXAMPLES)):
+    if col.button(f"Example {i+1}"):
+        selected = ex
+
 request = st.text_area(
     "Lease Request",
+    value=selected or "",
     placeholder='e.g. "Operator Du wants to mount a 15kg 5G antenna at a height of 40 meters on Tower TWR-101."',
     height=100,
 )
