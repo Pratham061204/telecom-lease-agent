@@ -1,0 +1,5 @@
+venv/
+data/towers_inventory.json
+__pycache__/
+*.pyc
+.env
