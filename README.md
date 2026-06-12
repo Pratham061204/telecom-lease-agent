@@ -16,7 +16,7 @@ tower inventory and regional policies, and returns an **APPROVED / REJECTED** ve
  └──────┬───────┘
         ▼
  ┌──────────────┐
- │  Agent Loop   │   orchestrates tool calls sequentially
+ │  Agent Loop   │   runs tools in sequence
  │               │
  │  ┌──────────┐ │   Tool 1: tower_lookup
  │  │  Tools   │ │   Tool 2: weight_capacity_check
@@ -63,15 +63,18 @@ python main.py "Operator Etisalat requests a 30kg panel on Tower TWR-102."
 python main.py --interactive
 python main.py -v
 python tests.py
+streamlit run app.py
 ```
 
 Each run prints the tool trace, per-check results, verdict, and a structured JSON output at the end.
+
+For a browser UI, run `streamlit run app.py` — shows operator, tower, reason, verdict, checks, and the full JSON on one page.
 
 `tests.py` runs checks across random towers covering weight limits, height limits, unknown towers, and multi-rule rejections.
 
 ## Design Decisions
 
-- **Tool-calling pattern**: each tool is a callable class with typed inputs/outputs. The engine calls them in order and records every call, so you can see exactly what was checked and why.
-- **Pydantic models**: all data in and out is validated, so the JSON output is always well-formed.
+- **Tool-calling pattern**: each tool is a callable class with typed inputs/outputs. The engine calls them in order and every call is recorded in the trace.
+- **Pydantic models**: all data in and out is validated, so the JSON output is always valid.
 - **Regex parser**: no NLP libraries — just regex. Covers the request formats in the spec.
 - **No-policy regions**: if a region has no rules in the policy file, the request passes rather than getting blocked.
