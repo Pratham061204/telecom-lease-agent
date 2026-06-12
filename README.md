@@ -3,6 +3,8 @@
 Takes plain-text lease requests from telecom operators, checks them against a
 tower inventory and regional policies, and returns an **APPROVED / REJECTED** verdict.
 
+**Live demo:** https://telecom-lease-agent.streamlit.app
+
 ---
 
 ## Architecture
